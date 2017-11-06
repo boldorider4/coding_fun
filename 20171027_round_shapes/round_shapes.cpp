@@ -13,7 +13,7 @@ double round_shapes(int x1, int y1, int r1, int x2, int y2, int r2) {
    /* edge cases 1: one circle is inside other circle
       I chose exactly that many decimal digits to satisfy the precision requirement
       when one of the radius is 200000 */
-  if (circleDistance + r2 <= r1 || circleDistance + r1 <= r2) {
+  if (circleDistance <= std::abs(r1 - r2)) {
     return 3.141592653589793 * std::min(r1,r2)*std::min(r1,r2);
   }
 
@@ -26,8 +26,8 @@ double round_shapes(int x1, int y1, int r1, int x2, int y2, int r2) {
      Likelihood of having made a mistake is very high. Please check the code just to
      make sense of the algorithm */
   double mutualChordLength = 2 * std::sqrt(std::abs(r1*r1 - \
-                             (.5 * (circleDistance*circleDistance + r1*r1 - r2*r2) / circleDistance)* \
-                             (.5 * (circleDistance*circleDistance + r1*r1 - r2*r2) / circleDistance)));
+                             (.5 * (circleDistance + (r1 * r1 - r2 * r2) / circleDistance)) * \
+                             (.5 * (circleDistance + (r1 * r1 - r2 * r2) / circleDistance))));
 
   /* calculating distance between center of circle and center-point of chord: applying
      trivial Pythagorean theorem */
