@@ -91,5 +91,20 @@ int main() {
   std::cout << "round shape " << round_shapes(center_x1, center_y1, radius1, center_x2, center_y2, radius2) \
             << std::endl  << std::endl;
 
+  center_x1 = 5;
+  center_y1 = 5;
+  radius1 = 20;
+  center_x2 = 0;
+  center_y2 = 0;
+  radius2 = 10;
+  std::cout << "center_x1 " << center_x1 << std::endl;
+  std::cout << "center_y1 " << center_y1 << std::endl;
+  std::cout << "radius1 " << radius1 << std::endl;
+  std::cout << "center_x2 " << center_x2 << std::endl;
+  std::cout << "center_y2 " << center_y2 << std::endl;
+  std::cout << "radius2 " << radius2 << std::endl;
+  std::cout << "round shape " << round_shapes(center_x1, center_y1, radius1, center_x2, center_y2, radius2) \
+            << std::endl  << std::endl;
+
   return 0;
 }
