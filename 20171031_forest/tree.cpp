@@ -24,8 +24,7 @@ int boom_sight(boomKnot* n, int max) {
 
 int boom_sight_helper(boomKnot* n) {
   if (n == nullptr) return -1;
-  int current_spot = 0;
-  return boom_sight(n, current_spot);
+  return boom_sight(n, -100000);
 }
 
 int main() {
@@ -48,7 +47,24 @@ int main() {
   node1.r = &node3;
   node4.l = &node5;
 
-  std::cout << "boom sight is " << boom_sight_helper(&node0) << std::endl;
+  std::cout << "example 1 (common tree): boom sight is " << boom_sight_helper(&node0) << std::endl;
+
+  boomKnot* nodeNull = nullptr;
+
+  std::cout << "example 2 (empty boom): boom sight is " << boom_sight_helper(nodeNull) << std::endl;
+
+  boomKnot onlyNode;
+
+  std::cout << "example 3 (only boom): boom sight is " << boom_sight_helper(&onlyNode) << std::endl;
+
+  boomKnot smalleNode0;
+  smalleNode0.x = -10;
+  boomKnot smalleNode1;
+  smalleNode1.x = 0;
+
+  smalleNode0.l = &smalleNode1;
+
+  std::cout << "example 4 (small value tree): boom sight is " << boom_sight_helper(&smalleNode0) << std::endl;
 
   return 0;
 }
