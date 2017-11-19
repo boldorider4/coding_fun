@@ -1,10 +1,13 @@
 #include<iostream>
+
+
 using namespace std;
 
 class Person {
 public:
   Person(int x)  { cout << "Person::Person(int ) called" << endl;   }
   Person()     { cout << "Person::Person() called" << endl;   }
+  void whatever() { cout << "This does not need to be reimplemented" << endl; }
 };
 
 class Faculty : virtual public Person {
@@ -29,5 +32,8 @@ public:
 };
 
 int main() {
+  cout << "TA ta(0);" << endl;
   TA ta(0);
+  cout << "\nStudent st(0);" << endl;
+  Student st(0);
 }
