@@ -7,13 +7,25 @@ ifeq ($(DEBUG),1)
         CCFLAGS+=-g -O0
 endif
 
-all: occ_bin
+all: occ
 
-occ_bin:
-	$(CC) $(CCFLAGS) $(CCINCLUDE) -o occ main.cpp
+occ: main.o fileParser.o cmdlParser.o
+	$(CC) $(CCFLAGS) $(CCINCLUDE) -o $@ $^
 
 # occ_boost_bin:
 # 	$(CC) $(CCFLAGS) $(CCLINK_BOOST) $(CCINCLUDE_BOOST) -o occ_boost main_boost.cpp
 
+main.o: main.cpp
+	$(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
+
+fileParser.o: fileParser.cpp
+	$(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
+
+cmdlParser.o: cmdlParser.cpp
+	$(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
+
+fileParser.cpp: fileParser.h errorCode.h
+cmdlParser.cpp: cmdlParser.h errorCode.h
+
 clean:
-	rm -f occ* *~
+	rm -f occ* *.o *~
