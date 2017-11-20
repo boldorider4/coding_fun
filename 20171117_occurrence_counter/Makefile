@@ -24,8 +24,9 @@ fileParser.o: fileParser.cpp
 cmdlParser.o: cmdlParser.cpp
 	$(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
 
-fileParser.cpp: fileParser.h errorCode.h
-cmdlParser.cpp: cmdlParser.h errorCode.h
+fileParser.o: fileParser.h errorCode.h
+cmdlParser.o: cmdlParser.h errorCode.h
+main.o: fileParser.h cmdlParser.h errorCode.h
 
 clean:
 	rm -f occ* *.o *~
