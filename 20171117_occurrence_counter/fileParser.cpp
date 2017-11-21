@@ -37,11 +37,18 @@ occRetval fileParser::countWord(int& count, const char* const word, const bool c
   if (!fileReader.is_open()) {
     return occRetval::file_is_not_open;
   } else {
-    std::string fileWord;
+    std::vector<char> fileWord;
+    char fileChar;
     try {
-      while (fileReader >> fileWord) {
-        if (stringCompare(word, fileWord.c_str(), caseInsensitive)) {
-          count++;
+      while (fileReader.get(fileChar)) {
+        if (isalnum(fileChar)) {
+          fileWord.push_back(fileChar);
+        } else {
+          if (stringCompare(word, fileWord, caseInsensitive)) {
+            count++;
+          }
+
+          fileWord.resize(0);
         }
       }
 
@@ -55,8 +62,12 @@ occRetval fileParser::countWord(int& count, const char* const word, const bool c
 }
 
 
-bool fileParser::stringCompare(const char* const searchWord, const char* const fileWord, const bool caseInsensitive) {
+bool fileParser::stringCompare(const char* const searchWord, const std::vector<char>& fileWord, const bool caseInsensitive) {
   size_t sLength = strlen(searchWord);
+
+  if (fileWord.size() != sLength) {
+    return false;
+  }
 
   for (size_t stridx = 0; stridx < sLength; stridx++) {
     if (searchWord[stridx] != fileWord[stridx] && (!caseInsensitive ||
@@ -66,10 +77,6 @@ bool fileParser::stringCompare(const char* const searchWord, const char* const f
                                                      searchWord[stridx] != fileWord[stridx] + 32)))) {
       return false;
     }
-  }
-
-  if (fileWord[sLength] != '\0') {
-    return false;
   }
 
   return true;
