@@ -9,7 +9,7 @@ endif
 
 all: occ
 
-occ: main.o fileParser.o cmdlParser.o
+occ: main.o FileParser.o CmdlParser.o
 	@ $(CC) $(CCFLAGS) $(CCINCLUDE) -o $@ $^
 
 # occ_boost_bin:
@@ -18,15 +18,15 @@ occ: main.o fileParser.o cmdlParser.o
 main.o: main.cpp
 	@ $(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
 
-fileParser.o: fileParser.cpp
+FileParser.o: FileParser.cpp
 	@ $(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
 
-cmdlParser.o: cmdlParser.cpp
+CmdlParser.o: CmdlParser.cpp
 	@ $(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
 
-fileParser.o: fileParser.h errorCode.h
-cmdlParser.o: cmdlParser.h errorCode.h
-main.o: fileParser.h cmdlParser.h errorCode.h
+FileParser.o: FileParser.h errorCode.h
+CmdlParser.o: CmdlParser.h errorCode.h
+main.o: FileParser.h CmdlParser.h errorCode.h
 
 clean:
 	@ rm -f occ* *.o *~

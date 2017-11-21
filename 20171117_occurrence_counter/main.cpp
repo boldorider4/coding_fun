@@ -2,8 +2,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
-#include "cmdlParser.h"
-#include "fileParser.h"
+#include "CmdlParser.h"
+#include "FileParser.h"
 #include "errorCode.h"
 
 

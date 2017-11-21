@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include <string>
 #include <cstring>
-#include "fileParser.h"
+#include "FileParser.h"
 
 
 FileParser::FileParser(const char* const fileName) {

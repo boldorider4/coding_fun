@@ -1,6 +1,6 @@
 #include <stdexcept>
 #include <iostream>
-#include "cmdlParser.h"
+#include "CmdlParser.h"
 
 
 CmdlParser::CmdlParser(int argc, const char* const* argv, bool debug) : argc(argc), argv(argv),
