@@ -17,7 +17,7 @@ class FileParser {
   FileParser& operator=(const FileParser&&) = delete;
 
   /* interface */
-  OccRetval countWord(int& count, const char* const word, const bool caseInsensitive);
+  OccRetval countWord(int* count, const char* const word, const bool caseInsensitive);
 
  private:
   std::ifstream fileReader;

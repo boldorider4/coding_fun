@@ -28,7 +28,7 @@ int main(int argc, const char* const* argv) {
 
   try {
     FileParser fparser(parser.getFileName());
-    retval = fparser.countWord(count, parser.getWord(), parser.getCaseInsensitive());
+    retval = fparser.countWord(&count, parser.getWord(), parser.getCaseInsensitive());
 
     if (retval == OccRetval::file_is_not_open) {
       std::cerr << "File " << parser.getFileName() << " does not exist or could not be opened" << std::endl;

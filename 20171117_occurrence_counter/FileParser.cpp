@@ -31,8 +31,8 @@ FileParser::~FileParser() {
 }
 
 
-OccRetval FileParser::countWord(int& count, const char* const word, const bool caseInsensitive) {
-  count = 0;
+OccRetval FileParser::countWord(int* count, const char* const word, const bool caseInsensitive) {
+  *count = 0;
 
   if (!fileReader.is_open()) {
     return OccRetval::file_is_not_open;
@@ -45,7 +45,7 @@ OccRetval FileParser::countWord(int& count, const char* const word, const bool c
           fileWord.push_back(fileChar);
         } else {
           if (stringCompare(word, fileWord, caseInsensitive)) {
-            count++;
+            (*count)++;
           }
 
           fileWord.resize(0);
