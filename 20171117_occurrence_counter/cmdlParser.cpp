@@ -53,6 +53,8 @@ occRetval cmdlParser::parseCmdlArguments() {
   if (argc == 1 || mustPrintHelp) {
     printHelp();
     return occRetval::must_exit;
+  } else if (argc == 2 || word == nullptr || fileName == nullptr) {
+    throw std::invalid_argument(invalidArgumentMessage);
   }
 
   return occRetval::no_error;
