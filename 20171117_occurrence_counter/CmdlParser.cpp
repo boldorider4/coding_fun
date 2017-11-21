@@ -16,9 +16,6 @@ CmdlParser::CmdlParser(int argc, const char* const* argv, bool debug) : argc(arg
 }
 
 
-CmdlParser::~CmdlParser() {}
-
-
 OccRetval CmdlParser::parseCmdlArguments() {
 
   bool mustPrintHelp = false;
