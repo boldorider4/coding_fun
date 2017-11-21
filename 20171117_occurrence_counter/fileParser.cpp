@@ -1,12 +1,28 @@
+#include <stdexcept>
 #include <string>
 #include <cstring>
 #include "fileParser.h"
 
 
 fileParser::fileParser(const char* const fileName) {
+  if (fileName == nullptr) {
+    throw std::invalid_argument("fileName passed to fileParser was nullptr");
+  }
+
   try {
-    fileReader.open(fileName);
-  } catch (const std::ifstream::failure& e) {}
+    if (fileName != nullptr && fileName[0] != '/') {
+      char* relativeFileName = new char[strlen(fileName) + 2];
+      relativeFileName[0] = '.';
+      relativeFileName[1] = '/';
+      strcpy(relativeFileName+2, fileName);
+      fileReader.open(relativeFileName);
+    } else {
+
+      fileReader.open(fileName);
+    }
+  } catch (const std::ifstream::failure& f_e) {
+    throw f_e;
+  }
 }
 
 
