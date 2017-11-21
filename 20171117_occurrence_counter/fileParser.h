@@ -6,17 +6,17 @@
 #include "errorCode.h"
 
 
-class fileParser {
+class FileParser {
  public:
   /* con/de-structors */
-  fileParser(const char* const fileName);
-  virtual ~fileParser();
-  fileParser(const fileParser&) = delete;
-  fileParser(const fileParser&&) = delete;
-  fileParser& operator=(const fileParser&) = delete;
+  FileParser(const char* const fileName);
+  virtual ~FileParser();
+  FileParser(const FileParser&) = delete;
+  FileParser(const FileParser&&) = delete;
+  FileParser& operator=(const FileParser&) = delete;
 
   /* interface */
-  occRetval countWord(int& count, const char* const word, const bool caseInsensitive);
+  OccRetval countWord(int& count, const char* const word, const bool caseInsensitive);
 
  private:
   std::ifstream fileReader;

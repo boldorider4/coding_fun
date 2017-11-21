@@ -5,17 +5,17 @@
 #include "errorCode.h"
 
 
-class cmdlParser {
+class CmdlParser {
  public:
   /* con/de-structors */
-  cmdlParser(int argc, const char* const* argv, bool debug=false);
-  virtual ~cmdlParser();
-  cmdlParser(const cmdlParser&) = delete;
-  cmdlParser(const cmdlParser&&) = delete;
-  cmdlParser& operator=(const cmdlParser&) = delete;
+  CmdlParser(int argc, const char* const* argv, bool debug=false);
+  virtual ~CmdlParser();
+  CmdlParser(const CmdlParser&) = delete;
+  CmdlParser(const CmdlParser&&) = delete;
+  CmdlParser& operator=(const CmdlParser&) = delete;
 
   /* interface */
-  occRetval parseCmdlArguments();
+  OccRetval parseCmdlArguments();
   void printArgs() const;
   const char* getWord() const;
   const char* getFileName() const;

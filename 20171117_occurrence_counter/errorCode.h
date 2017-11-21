@@ -1,7 +1,7 @@
 #ifndef ERROR_CODE_H
 #define ERROR_CODE_H
 
-enum class occRetval : int {
+enum class OccRetval : int {
   no_error = 0,
   file_is_not_open = 1,
   file_reading_error = 2,

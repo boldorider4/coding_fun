@@ -9,9 +9,9 @@
 
 int main(int argc, const char* const* argv) {
 
-  occRetval retval;
+  OccRetval retval;
 
-  cmdlParser parser(argc, argv);
+  CmdlParser parser(argc, argv);
 
   try {
     retval = parser.parseCmdlArguments();
@@ -20,20 +20,20 @@ int main(int argc, const char* const* argv) {
     return EXIT_FAILURE;
   }
 
-  if (retval == occRetval::must_exit) {
+  if (retval == OccRetval::must_exit) {
     return EXIT_SUCCESS;
   }
 
   int count = 0;
 
   try {
-    fileParser fparser(parser.getFileName());
+    FileParser fparser(parser.getFileName());
     retval = fparser.countWord(count, parser.getWord(), parser.getCaseInsensitive());
 
-    if (retval == occRetval::file_is_not_open) {
+    if (retval == OccRetval::file_is_not_open) {
       std::cerr << "File " << parser.getFileName() << " does not exist or could not be opened" << std::endl;
       return EXIT_FAILURE;
-    } else if (retval == occRetval::file_reading_error) {
+    } else if (retval == OccRetval::file_reading_error) {
       std::cerr << "Error reading file" << std::endl;
       return EXIT_FAILURE;
     } else {

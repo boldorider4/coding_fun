@@ -3,7 +3,7 @@
 #include "cmdlParser.h"
 
 
-cmdlParser::cmdlParser(int argc, const char* const* argv, bool debug) : argc(argc), argv(argv),
+CmdlParser::CmdlParser(int argc, const char* const* argv, bool debug) : argc(argc), argv(argv),
                                                                         caseInsensitive(false),
                                                                         word(nullptr), fileName(nullptr) {
   if (debug) {
@@ -16,10 +16,10 @@ cmdlParser::cmdlParser(int argc, const char* const* argv, bool debug) : argc(arg
 }
 
 
-cmdlParser::~cmdlParser() {}
+CmdlParser::~CmdlParser() {}
 
 
-occRetval cmdlParser::parseCmdlArguments() {
+OccRetval CmdlParser::parseCmdlArguments() {
 
   bool mustPrintHelp = false;
 
@@ -52,25 +52,25 @@ occRetval cmdlParser::parseCmdlArguments() {
 
   if (argc == 1 || mustPrintHelp) {
     printHelp();
-    return occRetval::must_exit;
+    return OccRetval::must_exit;
   } else if (argc == 2 || word == nullptr || fileName == nullptr) {
     throw std::invalid_argument(invalidArgumentMessage);
   }
 
-  return occRetval::no_error;
+  return OccRetval::no_error;
 }
 
 
-const char* cmdlParser::getWord() const { return word; }
+const char* CmdlParser::getWord() const { return word; }
 
 
-const char* cmdlParser::getFileName() const { return fileName; }
+const char* CmdlParser::getFileName() const { return fileName; }
 
 
-bool cmdlParser::getCaseInsensitive() const { return caseInsensitive; }
+bool CmdlParser::getCaseInsensitive() const { return caseInsensitive; }
 
 
-void cmdlParser::printArgs() const {
+void CmdlParser::printArgs() const {
   if (word != nullptr) {
     std::cout << "word: " << word << std::endl;
   }
@@ -81,7 +81,7 @@ void cmdlParser::printArgs() const {
 }
 
 
-void cmdlParser::printHelp() const {
+void CmdlParser::printHelp() const {
   std::cout << "Options:\n"
             << " -h: print this usage text\n"
             << " -w: specifies the word to search for\n"
@@ -90,4 +90,4 @@ void cmdlParser::printHelp() const {
 }
 
 
-const std::string cmdlParser::invalidArgumentMessage{"Invalid command line parameters"};
+const std::string CmdlParser::invalidArgumentMessage{"Invalid command line parameters"};

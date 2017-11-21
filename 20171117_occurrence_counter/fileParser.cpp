@@ -4,9 +4,9 @@
 #include "fileParser.h"
 
 
-fileParser::fileParser(const char* const fileName) {
+FileParser::FileParser(const char* const fileName) {
   if (fileName == nullptr) {
-    throw std::invalid_argument("fileName passed to fileParser was nullptr");
+    throw std::invalid_argument("fileName passed to FileParser was nullptr");
   }
 
   try {
@@ -26,16 +26,16 @@ fileParser::fileParser(const char* const fileName) {
 }
 
 
-fileParser::~fileParser() {
+FileParser::~FileParser() {
   fileReader.close();
 }
 
 
-occRetval fileParser::countWord(int& count, const char* const word, const bool caseInsensitive) {
+OccRetval FileParser::countWord(int& count, const char* const word, const bool caseInsensitive) {
   count = 0;
 
   if (!fileReader.is_open()) {
-    return occRetval::file_is_not_open;
+    return OccRetval::file_is_not_open;
   } else {
     std::vector<char> fileWord;
     char fileChar;
@@ -54,15 +54,15 @@ occRetval fileParser::countWord(int& count, const char* const word, const bool c
 
       fileReader.seekg(0);
     } catch (const std::ifstream::failure& e) {
-      return occRetval::file_reading_error;
+      return OccRetval::file_reading_error;
     }
   }
 
-  return occRetval::no_error;
+  return OccRetval::no_error;
 }
 
 
-bool fileParser::stringCompare(const char* const searchWord, const std::vector<char>& fileWord, const bool caseInsensitive) {
+bool FileParser::stringCompare(const char* const searchWord, const std::vector<char>& fileWord, const bool caseInsensitive) {
   size_t sLength = strlen(searchWord);
 
   if (fileWord.size() != sLength) {
