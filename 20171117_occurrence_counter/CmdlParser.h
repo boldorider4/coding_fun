@@ -13,6 +13,7 @@ class CmdlParser {
   CmdlParser(const CmdlParser&) = delete;
   CmdlParser(const CmdlParser&&) = delete;
   CmdlParser& operator=(const CmdlParser&) = delete;
+  CmdlParser& operator=(const CmdlParser&&) = delete;
 
   /* interface */
   OccRetval parseCmdlArguments();

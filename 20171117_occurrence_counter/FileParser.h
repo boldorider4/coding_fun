@@ -14,6 +14,7 @@ class FileParser {
   FileParser(const FileParser&) = delete;
   FileParser(const FileParser&&) = delete;
   FileParser& operator=(const FileParser&) = delete;
+  FileParser& operator=(const FileParser&&) = delete;
 
   /* interface */
   OccRetval countWord(int& count, const char* const word, const bool caseInsensitive);
