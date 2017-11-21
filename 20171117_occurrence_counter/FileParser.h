@@ -10,7 +10,7 @@ class FileParser {
  public:
   /* con/de-structors */
   FileParser(const char* const fileName);
-  virtual ~FileParser();
+  ~FileParser();
   FileParser(const FileParser&) = delete;
   FileParser(const FileParser&&) = delete;
   FileParser& operator=(const FileParser&) = delete;

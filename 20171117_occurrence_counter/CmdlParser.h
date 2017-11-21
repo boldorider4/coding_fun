@@ -9,7 +9,7 @@ class CmdlParser {
  public:
   /* con/de-structors */
   CmdlParser(int argc, const char* const* argv, bool debug=false);
-  virtual ~CmdlParser();
+  ~CmdlParser();
   CmdlParser(const CmdlParser&) = delete;
   CmdlParser(const CmdlParser&&) = delete;
   CmdlParser& operator=(const CmdlParser&) = delete;
