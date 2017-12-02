@@ -55,8 +55,7 @@ class Map {
 
 
 template<typename K, typename V>
-class Node {
-  friend Map<K, V>;
+struct Node {
 
   Node(const K &key, const V &value) : key(key), value(value) {}
   ~Node() {}
@@ -68,8 +67,7 @@ class Node {
 
 
 template<typename K, typename V>
-class Bucket {
-  friend Map<K, V>;
+struct Bucket {
 
   Bucket() {}
   ~Bucket() {}
