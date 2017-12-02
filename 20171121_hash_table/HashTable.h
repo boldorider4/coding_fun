@@ -136,18 +136,8 @@ void Map<K, V>::insert(const K &key, const V &value) {
 template<typename K, typename V>
 bool Map<K, V>::contains(const K &key) {
 
-  size_t hashIndex = hash(key) % mapSize;
-  Bucket<K, V>* bucketAtKey = buckets + hashIndex;
-  Node<K, V>* curNode = bucketAtKey->head;
-
-  while (curNode != nullptr) {
-    if (equals(curNode->key,key)) {
-      return true;
-    }
-    curNode = curNode->next;
-  }
-
-  return false;
+  V voidArg;
+  return lookup(key, &voidArg);
 }
 
 
