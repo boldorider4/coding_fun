@@ -25,16 +25,42 @@ int main() {
   name_age_map.insert("Martino Gilgengo", 39);
   name_age_map.insert("Savior Countryside", 34);
 
-  int saviors_age = 0;
-  bool found = name_age_map.lookup("Savior Countryside", &saviors_age);
+  int age = 0;
+  bool found = name_age_map.lookup("Savior Countryside", &age);
 
   if (found) {
-    std::cout << "Savior Countryside's age " << saviors_age << std::endl;
+    std::cout << "Savior Countryside's age " << age << std::endl;
   } else {
     std::cout << "Savior Countryside was not found" << std::endl;
   }
+
+  age = 0;
+  found = name_age_map.lookup("Gino Sorbillo", &age);
+
+  if (found) {
+    std::cout << "Gino Sorbillo's age " << age << std::endl;
+  } else {
+    std::cout << "Gino Sorbillo was not found" << std::endl;
+  }
+
   std::cout << "is Gino Sorbillo in the list? " << name_age_map.contains("Gino Sorbillo") << std::endl;
   std::cout << "is Giacomo Tommaso in the list? " << name_age_map.contains("Giacomo Tommaso") << std::endl;
+
+  name_age_map.insert("Gino Sorbillo", 70);
+
+  age = 0;
+  found = name_age_map.lookup("Gino Sorbillo", &age);
+
+  std::cout << "Re-inserting Gino Sorbillo's age" << std::endl;
+  if (found) {
+    std::cout << "Gino Sorbillo's age " << age << std::endl;
+  } else {
+    std::cout << "Gino Sorbillo was not found" << std::endl;
+  }
+
+  name_age_map.remove("Gino Sorbillo");
+  std::cout << "After removing Gino Sorbillo fron the table, is he stil in the list? " <<
+    name_age_map.contains("Gino Sorbillo") << std::endl;
 
   return 0;
 }
