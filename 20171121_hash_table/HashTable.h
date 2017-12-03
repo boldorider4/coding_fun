@@ -123,6 +123,7 @@ void Map<K, V>::insert(const K &key, const V &value) {
 
   while (newNode != nullptr) {
     if (equals(newNode->key,key)) {
+      newNode->value = value;
       return;
     }
     prevNode = newNode;
