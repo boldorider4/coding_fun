@@ -1,13 +1,42 @@
 #include "FastOccurrenceCounter.h"
 #include "errorCode.h"
 #include <string>
+#if ((__GNUC__ >= 6) && defined(__clang__))
+#include <experimental/filesystem>
+#endif
 
 
 namespace OccurrenceCounter {
 
-  FastOccurrenceCounter::FastOccurrenceCounter(const std::string& fileName) : OccurrenceCounter(fileName),
+  FastOccurrenceCounter::FastOccurrenceCounter(const std::string& fileName) : fileName(fileName),
                                                                               parserHashTable(string_equals,
                                                                                               string_hash) {
+    if (fileName.empty()) {
+      throw std::invalid_argument("fileName passed to OccurrenceCounter was an empty string");
+    }
+
+    try {
+      std::string filePath;
+
+      if (fileName[0] != '/') {
+        filePath = "./";
+        filePath.append(fileName);
+      } else {
+        filePath = fileName;
+      }
+
+#if ((__GNUC__ >= 6) && defined(__clang__))
+      std::experimental::filesystem::path path(filePath);
+      if (std::experimental::filesystem::is_regular_file(path)) {
+        fileReader.open(filePath);
+      }
+#else
+      fileReader.open(filePath);
+#endif
+
+    } catch (const std::ifstream::failure& f_e) {
+      throw f_e;
+    }
   }
 
 
@@ -40,10 +69,12 @@ namespace OccurrenceCounter {
         }
 
       } catch (const std::ifstream::failure& e) {
+        fileReader.close();
         return OccRetval::file_reading_error;
       }
     }
 
+    fileReader.close();
     initialized = true;
     return OccRetval::no_error;
   }
@@ -61,6 +92,30 @@ namespace OccurrenceCounter {
   }
 
 
+  bool FastOccurrenceCounter::stringCompare(const std::string& searchWord, const std::string& fileWord, const bool caseInsensitive) {
+    size_t sLength = searchWord.length();
+
+    if (fileWord.length() != sLength) {
+      return false;
+    }
+
+    for (size_t stridx = 0; stridx < sLength; stridx++) {
+      if (searchWord[stridx] != fileWord[stridx] && (!caseInsensitive ||
+                                                     ((searchWord[stridx] >= 'A' && searchWord[stridx] <= 'Z' &&
+                                                       searchWord[stridx] != fileWord[stridx] - 32) ||
+                                                      (searchWord[stridx] >= 'a' && searchWord[stridx] <= 'z' &&
+                                                       searchWord[stridx] != fileWord[stridx] + 32)))) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+
+  std::string* FastOccurrenceCounter::getFileName() { return &fileName; }
+
+
   bool FastOccurrenceCounter::string_equals(const std::string& str1, const std::string& str2) {
     return stringCompare(str1, str2, false);
   }
@@ -74,5 +129,4 @@ namespace OccurrenceCounter {
     }
     return hash;
   }
-
 }

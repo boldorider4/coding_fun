@@ -1,4 +1,4 @@
-CC=/brew/Cellar/gcc/7.2.0/bin/g++-7
+CC=/usr/bin/g++-6
 CCFLAGS=-Wall -std=c++11
 
 SRC=./src
@@ -17,16 +17,16 @@ all: occi occ
 occi: main_occi.o OccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o
 	@ $(CC) $(CCFLAGS) $(CCINCLUDE) $(LDFLAGS) -o $@ $^
 
-occ: main_occ.o OccurrenceCounter.o InteractiveConsole.o
+occ: main_occ.o OccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o
 	@ $(CC) $(CCFLAGS) $(CCINCLUDE) $(LDFLAGS) -o $@ $^
 
 %.o: $(SRC)/%.cpp
 	@ $(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
 
-main_occi.o: $(INCLUDE)/errorCode.h $(INCLUDE)/InteractiveConsole.h $(INCLUDE)/FastOccurrenceCounter.h
-main_occ.o: $(INCLUDE)/errorCode.h $(INCLUDE)/InteractiveConsole.h $(INCLUDE)/OccurrenceCounter.h
-FasrOccurrenceCounter.o: $(INCLUDE)/FastOccurrenceCounter.h $(INCLUDE)/OccurrenceCounter.h $(SRC)/HashTable.h
-OccurrenceCounter.o: $(INCLUDE)/OccurrenceCounter.h $(INCLUDE)/errorCode.h
+main_occi.o: $(INCLUDE)/errorCode.h $(INCLUDE)/IOccurrenceCounter.h $(INCLUDE)/InteractiveConsole.h $(INCLUDE)/FastOccurrenceCounter.h
+main_occ.o: $(INCLUDE)/errorCode.h $(INCLUDE)/IOccurrenceCounter.h $(INCLUDE)/InteractiveConsole.h $(INCLUDE)/OccurrenceCounter.h
+FasrOccurrenceCounter.o: $(INCLUDE)/IOccurrenceCounter.h $(INCLUDE)/FastOccurrenceCounter.h $(INCLUDE)/OccurrenceCounter.h $(SRC)/HashTable.h
+OccurrenceCounter.o: $(INCLUDE)/IOccurrenceCounter.h $(INCLUDE)/OccurrenceCounter.h $(INCLUDE)/errorCode.h
 InteractiveConsole.o: $(INCLUDE)/InteractiveConsole.h $(INCLUDE)/errorCode.h
 
 clean:

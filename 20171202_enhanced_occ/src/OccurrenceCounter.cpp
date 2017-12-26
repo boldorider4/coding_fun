@@ -9,9 +9,9 @@
 
 namespace OccurrenceCounter {
 
-  OccurrenceCounter::OccurrenceCounter(const std::string& fileName) : fileName(fileName) {
+  BasicOccurrenceCounter::BasicOccurrenceCounter(const std::string& fileName) : fileName(fileName) {
     if (fileName.empty()) {
-      throw std::invalid_argument("fileName passed to OccurrenceCounter was an empty string");
+      throw std::invalid_argument("fileName passed to BasicOccurrenceCounter was an empty string");
     }
 
     try {
@@ -39,12 +39,12 @@ namespace OccurrenceCounter {
   }
 
 
-  OccurrenceCounter::~OccurrenceCounter() {
+  BasicOccurrenceCounter::~BasicOccurrenceCounter() {
     fileReader.close();
   }
 
 
-  OccRetval OccurrenceCounter::init() {
+  OccRetval BasicOccurrenceCounter::init() {
     if (!fileReader.is_open()) {
       return OccRetval::file_is_not_open;
     }
@@ -53,7 +53,7 @@ namespace OccurrenceCounter {
   }
 
 
-  OccRetval OccurrenceCounter::countWord(int* count, const std::string& word, const bool caseInsensitive) {
+  OccRetval BasicOccurrenceCounter::countWord(int* count, const std::string& word, const bool caseInsensitive) {
     if (initialized) {
       *count = 0;
 
@@ -79,18 +79,18 @@ namespace OccurrenceCounter {
       } catch (const std::ifstream::failure& e) {
         return OccRetval::file_reading_error;
       }
-
-      return OccRetval::no_error;
     } else {
       return OccRetval::not_initialized;
     }
+
+    return OccRetval::no_error;
   }
 
 
-  std::string* OccurrenceCounter::getFileName() { return &fileName; }
+  std::string* BasicOccurrenceCounter::getFileName() { return &fileName; }
 
 
-  bool OccurrenceCounter::stringCompare(const std::string& searchWord, const std::string& fileWord, const bool caseInsensitive) {
+  bool BasicOccurrenceCounter::stringCompare(const std::string& searchWord, const std::string& fileWord, const bool caseInsensitive) {
     size_t sLength = searchWord.length();
 
     if (fileWord.length() != sLength) {
@@ -109,5 +109,4 @@ namespace OccurrenceCounter {
 
     return true;
   }
-
 }

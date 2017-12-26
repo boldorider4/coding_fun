@@ -1,5 +1,7 @@
 #include "errorCode.h"
 #include "InteractiveConsole.h"
+#include "IOccurrenceCounter.h"
+#include "FastOccurrenceCounter.h"
 #include "OccurrenceCounter.h"
 #include <list>
 #include <chrono>
@@ -14,10 +16,17 @@ using Time = std::chrono::high_resolution_clock;
 using TimeMs = std::chrono::microseconds;
 
 
-void freeResources(std::list<OccurrenceCounter::OccurrenceCounter*>& counterList) {
+void freeResources(std::list<IOccurrenceCounter*>& counterList) {
   for (auto counterIt : counterList) {
     if (counterIt != nullptr) {
-      delete counterIt;
+      BasicOccurrenceCounter* basicCounterIt = dynamic_cast<BasicOccurrenceCounter*>(counterIt);
+      FastOccurrenceCounter* fastCounterIt = dynamic_cast<FastOccurrenceCounter*>(counterIt);
+
+      if (basicCounterIt != nullptr) {
+	delete basicCounterIt;
+      } else if (fastCounterIt != nullptr) {
+	delete fastCounterIt;
+      }
     }
   }
 }
@@ -25,7 +34,7 @@ void freeResources(std::list<OccurrenceCounter::OccurrenceCounter*>& counterList
 
 int main() {
 
-  std::list<OccurrenceCounter::OccurrenceCounter*> counterList;
+  std::list<IOccurrenceCounter*> counterList;
   bool caseInsensitive = false;
 
   printWelcomeMessage();
@@ -50,7 +59,7 @@ int main() {
 
       try {
 
-        OccurrenceCounter::OccurrenceCounter* pOcc = new OccurrenceCounter::OccurrenceCounter(parsedString);
+        BasicOccurrenceCounter* pOcc = new BasicOccurrenceCounter(parsedString);
         retval = pOcc->init();
 
         if (retval == OccRetval::file_is_not_open) {
