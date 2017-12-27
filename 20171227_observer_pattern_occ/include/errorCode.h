@@ -12,6 +12,7 @@ namespace occurrenceCounter {
                         file_parsed,
                         word_parsed,
                         must_exit,
+                        thread_error,
                         unknown_error
   };
 
