@@ -4,7 +4,7 @@
 #include "errorCode.h"
 #include <string>
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
 
   class IOccurrenceCounter {
   public:

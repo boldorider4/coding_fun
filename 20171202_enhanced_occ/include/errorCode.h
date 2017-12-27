@@ -2,7 +2,7 @@
 #define ERROR_CODE_H
 
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
   
   enum class OccRetval {
                         no_error = 0,

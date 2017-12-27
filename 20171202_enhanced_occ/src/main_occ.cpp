@@ -2,7 +2,7 @@
 #include "InteractiveConsole.h"
 #include "IOccurrenceCounter.h"
 #include "CommonOccurrenceCounter.h"
-#include "OccurrenceCounter.h"
+#include "BasicOccurrenceCounter.h"
 #include <list>
 #include <chrono>
 #include <string>
@@ -11,7 +11,7 @@
 #include <stdexcept>
 
 
-using namespace OccurrenceCounter;
+using namespace occurrenceCounter;
 using Time = std::chrono::high_resolution_clock;
 using TimeMs = std::chrono::microseconds;
 

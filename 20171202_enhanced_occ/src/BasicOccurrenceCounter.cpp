@@ -1,10 +1,10 @@
-#include "OccurrenceCounter.h"
+#include "BasicOccurrenceCounter.h"
 #include "CommonOccurrenceCounter.h"
 #include <string>
 #include <cstring>
 
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
 
   BasicOccurrenceCounter::BasicOccurrenceCounter(const std::string& fileName) : fileName(fileName) {
     openFile(fileName, fileReader);

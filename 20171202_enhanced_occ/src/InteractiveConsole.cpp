@@ -6,7 +6,7 @@
 #include "InteractiveConsole.h"
 
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
 
 
   OccRetval parseInteractiveArguments(std::string* parsedString) {

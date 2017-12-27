@@ -1,5 +1,5 @@
 #include "CommonOccurrenceCounter.h"
-#include "OccurrenceCounter.h"
+#include "BasicOccurrenceCounter.h"
 #include "FastOccurrenceCounter.h"
 #include <stdexcept>
 #if ((__GNUC__ >= 6) && defined(__clang__))
@@ -7,7 +7,7 @@
 #endif
 
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
 
   void openFile(const std::string& fileName, std::ifstream& fileReader) {
     if (fileName.empty()) {

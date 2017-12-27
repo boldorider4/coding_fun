@@ -8,7 +8,7 @@
 #include <string>
 
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
 
   class FastOccurrenceCounter : public IOccurrenceCounter {
 

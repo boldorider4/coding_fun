@@ -5,7 +5,7 @@
 #include "errorCode.h"
 
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
 
   OccRetval parseInteractiveArguments(std::string* parsedString);
   OccRetval parseInteractiveArguments(std::string* parsedString, bool* caseInsensitive);

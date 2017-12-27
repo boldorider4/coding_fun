@@ -11,7 +11,7 @@
 #include <stdexcept>
 
 
-using namespace OccurrenceCounter;
+using namespace occurrenceCounter;
 using Time = std::chrono::high_resolution_clock;
 using TimeMs = std::chrono::microseconds;
 

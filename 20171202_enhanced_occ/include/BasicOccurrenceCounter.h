@@ -7,7 +7,7 @@
 #include <string>
 
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
 
   class BasicOccurrenceCounter : public IOccurrenceCounter {
   public:

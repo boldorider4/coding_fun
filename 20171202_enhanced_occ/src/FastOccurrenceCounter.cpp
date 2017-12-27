@@ -4,7 +4,7 @@
 #include <string>
 
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
 
   FastOccurrenceCounter::FastOccurrenceCounter(const std::string& fileName) : fileName(fileName),
                                                                               parserHashTable(string_equals,

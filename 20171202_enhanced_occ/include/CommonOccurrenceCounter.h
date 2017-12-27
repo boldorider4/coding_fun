@@ -7,7 +7,7 @@
 #include <list>
 
 
-namespace OccurrenceCounter {
+namespace occurrenceCounter {
 
   void openFile(const std::string& fileName, std::ifstream& fileReader);
   bool stringCompare(const std::string& searchWord, const std::string& fileWord, const bool caseInsensitive);
