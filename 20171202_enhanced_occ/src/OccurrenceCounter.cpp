@@ -1,41 +1,13 @@
-#include <stdexcept>
+#include "OccurrenceCounter.h"
+#include "CommonOccurrenceCounter.h"
 #include <string>
 #include <cstring>
-#include "OccurrenceCounter.h"
-#if ((__GNUC__ >= 6) && defined(__clang__))
-#include <experimental/filesystem>
-#endif
 
 
 namespace OccurrenceCounter {
 
   BasicOccurrenceCounter::BasicOccurrenceCounter(const std::string& fileName) : fileName(fileName) {
-    if (fileName.empty()) {
-      throw std::invalid_argument("fileName passed to BasicOccurrenceCounter was an empty string");
-    }
-
-    try {
-      std::string filePath;
-
-      if (fileName[0] != '/') {
-        filePath = "./";
-        filePath.append(fileName);
-      } else {
-        filePath = fileName;
-      }
-
-#if ((__GNUC__ >= 6) && defined(__clang__))
-      std::experimental::filesystem::path path(filePath);
-      if (std::experimental::filesystem::is_regular_file(path)) {
-        fileReader.open(filePath);
-      }
-#else
-      fileReader.open(filePath);
-#endif
-
-    } catch (const std::ifstream::failure& f_e) {
-      throw f_e;
-    }
+    openFile(fileName, fileReader);
   }
 
 
@@ -88,25 +60,4 @@ namespace OccurrenceCounter {
 
 
   std::string* BasicOccurrenceCounter::getFileName() { return &fileName; }
-
-
-  bool BasicOccurrenceCounter::stringCompare(const std::string& searchWord, const std::string& fileWord, const bool caseInsensitive) {
-    size_t sLength = searchWord.length();
-
-    if (fileWord.length() != sLength) {
-      return false;
-    }
-
-    for (size_t stridx = 0; stridx < sLength; stridx++) {
-      if (searchWord[stridx] != fileWord[stridx] && (!caseInsensitive ||
-                                                     ((searchWord[stridx] >= 'A' && searchWord[stridx] <= 'Z' &&
-                                                       searchWord[stridx] != fileWord[stridx] - 32) ||
-                                                      (searchWord[stridx] >= 'a' && searchWord[stridx] <= 'z' &&
-                                                       searchWord[stridx] != fileWord[stridx] + 32)))) {
-        return false;
-      }
-    }
-
-    return true;
-  }
 }

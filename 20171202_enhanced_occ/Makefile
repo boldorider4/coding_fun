@@ -14,10 +14,10 @@ endif
 
 all: occi occ
 
-occi: main_occi.o OccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o
+occi: main_occi.o OccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o CommonOccurrenceCounter.o
 	@ $(CC) $(CCFLAGS) $(CCINCLUDE) $(LDFLAGS) -o $@ $^
 
-occ: main_occ.o OccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o
+occ: main_occ.o OccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o CommonOccurrenceCounter.o
 	@ $(CC) $(CCFLAGS) $(CCINCLUDE) $(LDFLAGS) -o $@ $^
 
 %.o: $(SRC)/%.cpp
@@ -25,7 +25,7 @@ occ: main_occ.o OccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o
 
 main_occi.o: $(INCLUDE)/errorCode.h $(INCLUDE)/IOccurrenceCounter.h $(INCLUDE)/InteractiveConsole.h $(INCLUDE)/FastOccurrenceCounter.h
 main_occ.o: $(INCLUDE)/errorCode.h $(INCLUDE)/IOccurrenceCounter.h $(INCLUDE)/InteractiveConsole.h $(INCLUDE)/OccurrenceCounter.h
-FasrOccurrenceCounter.o: $(INCLUDE)/IOccurrenceCounter.h $(INCLUDE)/FastOccurrenceCounter.h $(INCLUDE)/OccurrenceCounter.h $(SRC)/HashTable.h
+FastOccurrenceCounter.o: $(INCLUDE)/IOccurrenceCounter.h $(INCLUDE)/FastOccurrenceCounter.h $(INCLUDE)/OccurrenceCounter.h $(SRC)/HashTable.h
 OccurrenceCounter.o: $(INCLUDE)/IOccurrenceCounter.h $(INCLUDE)/OccurrenceCounter.h $(INCLUDE)/errorCode.h
 InteractiveConsole.o: $(INCLUDE)/InteractiveConsole.h $(INCLUDE)/errorCode.h
 

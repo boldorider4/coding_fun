@@ -33,10 +33,6 @@ namespace OccurrenceCounter {
     std::string fileName;
     StringIntMap parserHashTable;
     std::ifstream fileReader;
-
-    static bool stringCompare(const std::string& searchWord, const std::string& fileWord, const bool caseInsensitive);
-    static bool string_equals(const std::string& str1, const std::string& str2);
-    static int string_hash(const std::string& word);
   };
 
 }

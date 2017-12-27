@@ -28,8 +28,6 @@ namespace OccurrenceCounter {
     bool initialized {false};
     std::string fileName;
     std::ifstream fileReader;
-
-    static bool stringCompare(const std::string& searchWord, const std::string& fileWord, const bool caseInsensitive);
   };
 
 }
