@@ -65,15 +65,14 @@ int main() {
       } catch (const std::invalid_argument& ia_e) {
 
         std::cerr << ia_e.what() << std::endl;
-        freeResources(counterList);
-        return EXIT_FAILURE;
 
       } catch (const std::ifstream::failure& f_e) {
 
         std::cerr << f_e.what() << std::endl;
-        freeResources(counterList);
-        return EXIT_FAILURE;
 
+      } catch (const expfs::filesystem_error& fs_e) {
+
+	std::cerr << fs_e.what() << std::endl;
       }
     } else if (retval == OccRetval::word_parsed) {
 

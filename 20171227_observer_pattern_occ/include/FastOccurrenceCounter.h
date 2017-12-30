@@ -3,6 +3,8 @@
 
 #include "errorCode.h"
 #include "IOccurrenceCounter.h"
+#include "Producer.h"
+#include "Observer.h"
 #include "HashTable.h"
 #include <fstream>
 #include <string>
@@ -10,7 +12,7 @@
 
 namespace occurrenceCounter {
 
-  class FastOccurrenceCounter : public IOccurrenceCounter {
+  class FastOccurrenceCounter : public IOccurrenceCounter, Observer {
 
     using StringIntMap = Map<std::string, int>;
 
@@ -30,9 +32,12 @@ namespace occurrenceCounter {
 
   private:
     bool initialized {false};
+    StringIntMap* parserHashTable{nullptr};
+    FileChangeProducer* fileChangeWatchdog{nullptr};
     std::string fileName;
-    StringIntMap parserHashTable;
     std::ifstream fileReader;
+
+    void onNotification(int token) override;
   };
 
 }

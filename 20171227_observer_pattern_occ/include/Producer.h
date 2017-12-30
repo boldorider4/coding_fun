@@ -7,6 +7,11 @@
 #include <thread>
 #include <mutex>
 #include <string>
+#if (__GNUC__ < 5)
+#error This application requires g++ supporting experimental/filesystem
+#else
+#include <experimental/filesystem>
+#endif
 
 
 using namespace occurrenceCounter;
@@ -42,6 +47,8 @@ class Producer {
 };
 
 
+namespace expfs = std::experimental::filesystem;
+
 class FileChangeProducer : public Producer {
  public:
   FileChangeProducer(const std::string& fileName);
@@ -54,6 +61,7 @@ class FileChangeProducer : public Producer {
 
  private:
   std::string fileName;
+  expfs::file_time_type lastModifiedTime;
 
   virtual void notifyObservers();
 };

@@ -1,7 +1,6 @@
 #include "Producer.h"
 #include "Observer.h"
 #include <chrono>
-#include <iostream>
 
 
 using namespace occurrenceCounter;
@@ -58,20 +57,22 @@ OccRetval Producer::Stop() {
 
 void Producer::notifyObservers() {
 
-  std::cout << instanceName << " - threadLoop" << std::endl;
-
   for (auto observer : _observers) {
     observer->onNotification(0);
   }
 }
-
 
 void Producer::threadLoop(Producer* const producer) {
 
   while (true) {
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    producer->notifyObservers();
+
+    if (producer != nullptr) {
+      producer->notifyObservers();
+    } else {
+      break;
+    }
 
     /* locking producer resources */
     std::unique_lock<std::mutex> lockThread(producer->mtx);
@@ -86,8 +87,26 @@ void Producer::threadLoop(Producer* const producer) {
 }
 
 
-FileChangeProducer::FileChangeProducer(const std::string& fileName) : fileName(fileName) {}
-
+FileChangeProducer::FileChangeProducer(const std::string& fileName) :
+  fileName(fileName),
+  lastModifiedTime(expfs::last_write_time(fileName)) {}
 
 void FileChangeProducer::notifyObservers() {
+
+  /* get last write time*/
+  auto lastWriteTime = expfs::last_write_time(fileName);
+
+  /* convert last write time and previously stored time to std::time_t, then draw time lapse */
+  std::time_t lastWriteCtime = decltype(lastWriteTime)::clock::to_time_t(lastWriteTime);
+  std::time_t previousWriteCtime = decltype(lastWriteTime)::clock::to_time_t(lastModifiedTime);
+  double TimeLapse = difftime(lastWriteCtime, previousWriteCtime);
+
+  if (TimeLapse > 0) {
+
+    lastModifiedTime = lastWriteTime;
+
+    for (auto observer : _observers) {
+      observer->onNotification(0);
+    }
+  }
 }

@@ -2,18 +2,45 @@
 #include "CommonOccurrenceCounter.h"
 #include "errorCode.h"
 #include <string>
+#include <stdexcept>
 
 
 namespace occurrenceCounter {
 
-  FastOccurrenceCounter::FastOccurrenceCounter(const std::string& fileName) : fileName(fileName),
-                                                                              parserHashTable(string_equals,
-                                                                                              string_hash) {
-    openFile(fileName, fileReader);
+  FastOccurrenceCounter::FastOccurrenceCounter(const std::string& fileName) : fileName(fileName) {
+    try {
+      fileChangeWatchdog = new FileChangeProducer(fileName);
+    } catch (const expfs::filesystem_error& fs_e) {
+      throw fs_e;
+    }
+
+    try {
+      openFile(fileName, fileReader);
+    } catch (const std::ifstream::failure& f_e) {
+      delete fileChangeWatchdog;
+      throw f_e;
+    }
+
+    fileChangeWatchdog->addObserver(*this);
+    fileChangeWatchdog->Start();
+
+    parserHashTable = new StringIntMap(string_equals, string_hash);
   }
 
 
-  FastOccurrenceCounter::~FastOccurrenceCounter() {}
+  FastOccurrenceCounter::~FastOccurrenceCounter() {
+    if (fileChangeWatchdog != nullptr) {
+      fileChangeWatchdog->removeObserver(*this);
+      fileChangeWatchdog->Stop();
+      delete fileChangeWatchdog;
+    }
+    if (fileReader.is_open()) {
+      fileReader.close();
+    }
+    if (parserHashTable != nullptr) {
+      delete parserHashTable;
+    }
+  }
 
 
   OccRetval FastOccurrenceCounter::init() {
@@ -21,8 +48,10 @@ namespace occurrenceCounter {
     if (!fileReader.is_open()) {
       return OccRetval::file_is_not_open;
     } else {
+
       std::string fileWord;
       char fileChar;
+
       try {
         while (fileReader.get(fileChar)) {
           if (isalnum(fileChar)) {
@@ -31,15 +60,18 @@ namespace occurrenceCounter {
 
             int wordCount;
 
-            if (parserHashTable.lookup(fileWord, &wordCount)) {
-              parserHashTable.insert(fileWord, ++wordCount);
+            if (parserHashTable->lookup(fileWord, &wordCount)) {
+              parserHashTable->insert(fileWord, ++wordCount);
             } else {
-              parserHashTable.insert(fileWord, 1);
+              parserHashTable->insert(fileWord, 1);
             }
 
             fileWord.resize(0);
           }
         }
+
+	fileReader.clear();
+	fileReader.seekg(0);
 
       } catch (const std::ifstream::failure& e) {
         fileReader.close();
@@ -47,7 +79,6 @@ namespace occurrenceCounter {
       }
     }
 
-    fileReader.close();
     initialized = true;
     return OccRetval::no_error;
   }
@@ -57,7 +88,7 @@ namespace occurrenceCounter {
 
     if (initialized) {
       *count = 0;
-      parserHashTable.lookup(word, count);
+      parserHashTable->lookup(word, count);
       return OccRetval::no_error;
     } else {
       return OccRetval::not_initialized;
@@ -66,4 +97,13 @@ namespace occurrenceCounter {
 
 
   std::string* FastOccurrenceCounter::getFileName() { return &fileName; }
+
+
+  void FastOccurrenceCounter::onNotification(int token) {
+
+    fileReader.close();
+    openFile(fileName, fileReader);
+    parserHashTable->clear();
+    init();
+  }
 }
