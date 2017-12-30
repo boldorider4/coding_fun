@@ -20,10 +20,13 @@ observer: main_observer.o Producer.o Observer.o
 occi: main_occi.o BasicOccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o CommonOccurrenceCounter.o Observer.o Producer.o
 	@ $(CC) $(CCFLAGS) $(CCINCLUDE) -o $@ $^ $(LDFLAGS)
 
-occ: main_occ.o BasicOccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o CommonOccurrenceCounter.o
+occ: main_occ.o BasicOccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o CommonOccurrenceCounter.o Producer.o Observer.o
 	@ $(CC) $(CCFLAGS) $(CCINCLUDE) -o $@ $^ $(LDFLAGS)
 
 %.o: $(SRC)/%.cpp
+	@ $(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
+
+main_observer.o: test/main_observer.cpp
 	@ $(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<
 
 main_observer.o: $(INCLUDE)/errorCode.h $(INCLUDE)/Observer.h $(INCLUDE)/Producer.h
