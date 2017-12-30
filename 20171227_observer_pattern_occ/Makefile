@@ -15,13 +15,13 @@ endif
 all: occi occ observer
 
 observer: main_observer.o Producer.o Observer.o
-	@ $(CC) $(CCFLAGS) $(CCINCLUDE) $(LDFLAGS) -o $@ $^
+	@ $(CC) $(CCFLAGS) $(CCINCLUDE) -o $@ $^ $(LDFLAGS)
 
 occi: main_occi.o BasicOccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o CommonOccurrenceCounter.o
-	@ $(CC) $(CCFLAGS) $(CCINCLUDE) $(LDFLAGS) -o $@ $^
+	@ $(CC) $(CCFLAGS) $(CCINCLUDE) -o $@ $^ $(LDFLAGS)
 
 occ: main_occ.o BasicOccurrenceCounter.o FastOccurrenceCounter.o InteractiveConsole.o CommonOccurrenceCounter.o
-	@ $(CC) $(CCFLAGS) $(CCINCLUDE) $(LDFLAGS) -o $@ $^
+	@ $(CC) $(CCFLAGS) $(CCINCLUDE) -o $@ $^ $(LDFLAGS)
 
 %.o: $(SRC)/%.cpp
 	@ $(CC) -c $(CCFLAGS) $(CCINCLUDE) -o $@ $<

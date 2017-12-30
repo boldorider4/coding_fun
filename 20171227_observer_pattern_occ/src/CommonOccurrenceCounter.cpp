@@ -2,7 +2,7 @@
 #include "BasicOccurrenceCounter.h"
 #include "FastOccurrenceCounter.h"
 #include <stdexcept>
-#if ((__GNUC__ >= 6) && defined(__clang__))
+#if ((__GNUC__ >= 5))
 #include <experimental/filesystem>
 #endif
 
@@ -24,7 +24,7 @@ namespace occurrenceCounter {
         filePath = fileName;
       }
 
-#if ((__GNUC__ >= 6) && defined(__clang__))
+#if ((__GNUC__ >= 5))
       std::experimental::filesystem::path path(filePath);
       if (std::experimental::filesystem::is_regular_file(path)) {
         fileReader.open(filePath);
