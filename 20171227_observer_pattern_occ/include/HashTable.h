@@ -48,6 +48,9 @@ class Map {
   // remove the value associated with the provided key
   void remove(const K &key);
 
+  // clear the content of the hashtable
+  void clear();
+
  private:
 
   EqualsFunction equals;
@@ -96,7 +99,8 @@ template<typename K, typename V>
 
 
 template<typename K, typename V>
-Map<K, V>::~Map() {
+void Map<K, V>::clear() {
+
   for (size_t idx = 0; idx < mapSize; idx++) {
 
     Node<K, V>* curNode = buckets[idx].head;
@@ -106,7 +110,15 @@ Map<K, V>::~Map() {
       curNode = curNode->next;
       delete deletedNode;
     }
+
+    buckets[idx].head = nullptr;
   }
+}
+
+
+template<typename K, typename V>
+Map<K, V>::~Map() {
+  clear();
   delete[] buckets;
 }
 
