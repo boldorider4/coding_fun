@@ -1,4 +1,11 @@
-CC=/usr/bin/g++-6
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	include ./build/linux.mk
+endif
+ifeq ($(UNAME_S),Darwin)
+	include ./build/macos.mk
+endif
+
 CCFLAGS=-Wall -std=c++11
 
 SRC=./src
@@ -9,7 +16,7 @@ CCINCLUDE=-I./$(INCLUDE) -I./src
 LDFLAGS=-lstdc++fs -pthread
 
 ifeq ($(DEBUG),1)
-        CCFLAGS+=-g -O0
+	CCFLAGS+=-g -O0
 endif
 
 all: occi occ observer
