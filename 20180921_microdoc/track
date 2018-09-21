@@ -1,0 +1,16 @@
+Please implement a solution for the following code challenge in your preferred programming language. Your solution should provide necessary build system configurations, i.e., Maven or Gradle files, to build and test your project on the command line. 
+
+-------------------------------------------------------------------------------------------Coding Challenge------------------------------------------------------------------------------------------- 
+Given an arbitrary huge text file (expect multiple Terabyte) with one number in each line, e.g. 
+
+3 
+67 
+84 
+7896575543 
+8 
+
+implement an algorithm that finds the exact median of all numbers and print the result on std out. 
+The file should be given to the application via argument at startup on the command line. 
+Please provide the source code and a description how to build the program. 
+-------------------------------------------------------------------------------------------Coding Challenge-------------------------------------------------------------------------------------------
+  
