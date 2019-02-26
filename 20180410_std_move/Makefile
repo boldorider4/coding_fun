@@ -9,9 +9,12 @@ ifeq ($(DEBUG),1)
         CCFLAGS+=-g -O0
 endif
 
-all: test
+all: test move
 
 test: main.o
+	$(CC) $(CCFLAGS) $(CCINCLUDE) -o $@ $^
+
+move: move.o
 	$(CC) $(CCFLAGS) $(CCINCLUDE) -o $@ $^
 
 %.o: $(SRC)/%.cpp
